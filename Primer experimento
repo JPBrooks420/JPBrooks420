@@ -1,0 +1,35 @@
+import speech_recognition as sr
+from googletrans import Translator
+
+# Inicializar el reconocimiento de voz
+recognizer = sr.Recognizer()
+
+# Configurar el traductor
+translator = Translator()
+
+# Función para reconocer y traducir el discurso
+def reconocer_y_traducir():
+    with sr.Microphone() as source:
+        print("Di algo...")
+        audio = recognizer.listen(source)
+
+        try:
+            # Utilizar el reconocimiento de voz de Google para obtener el texto en inglés
+            texto = recognizer.recognize_google(audio)
+            print("Texto en inglés: " + texto)
+
+            # Traducir el texto a español
+            traduccion = translator.translate(texto, dest='es')
+            print("Texto en español: " + traduccion.text)
+
+        except sr.UnknownValueError:
+            print("No se pudo reconocer el audio")
+        except sr.RequestError as e:
+            print("Error en la solicitud al reconocer el audio: {0}".format(e))
+
+# Llamar a la función para iniciar el proceso de reconocimiento y traducción
+reconocer_y_traducir()
+pip install SpeechRecognition
+pip install googletrans==4.0.0-rc1
+
+
